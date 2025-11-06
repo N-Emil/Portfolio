@@ -48,7 +48,7 @@ Bu, **Emil Nağıyev**-in şəxsi portfolio vebsaytıdır. Backend developer kim
 - **Layihələr** - Hazırladığım layihələr
 - **Əlaqə** - Əlaqə formu və məlumatları
 
-### Layihələr Səhifəsi (projects.html)
+### Layihələr Səhifəsi (storeApp.html)
 - StoreApp layihəsinin detallı təsviri
 - Gələcək layihə planları
 - Kod nümunələri
