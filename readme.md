@@ -1,85 +1,124 @@
-# Emil Nağıyev - Portfolio Website
+# Product CRUD Application
 
-## 📋 Layihə Haqqında
+Spring Boot REST API tətbiqi - Məhsul (Product) üçün CRUD əməliyyatları.
 
-Bu, **Emil Nağıyev**-in şəxsi portfolio vebsaytıdır. Backend developer kimi bacarıqlarını, layihələrini və əlaqə məlumatlarını təqdim edən responsiv vebsayt.
+## Xüsusiyyətlər
 
-## ✨ Xüsusiyyətlər
+- Java 17
+- Spring Boot 3.2.0
+- Spring Data JPA
+- H2 Database (In-Memory)
+- REST API
+- Lombok
 
-- **Responsiv Dizayn** - Bütün cihazlarda optimal görünüş
-- **Hamar Skroll** - Navbar linkləri arasında hamar keçid
-- **Form Göndərilməsi** - Əlaqə formunun interaktiv işləməsi
-- **Layihə Detalları** - Hər layihə üçün ayrıca səhifə
-- **Bacarıq Göstəriciləri** - Progress barlarla bacarıq səviyyələri
+## Tətbiqin işə salınması
 
-## 🛠 İstifadə Olunan Texnologiyalar
+### Eclipse ilə:
 
-### Frontend
-- **HTML5** - Struktur
-- **CSS3** - Stil və dizayn
-- **Bootstrap 5.3.0** - Responsiv framework
-- **JavaScript** - İnteraktivlik
-- **Font Awesome 6.4.0** - İkonlar
+1. Eclipse-i açın
+2. File -> Import -> Maven -> Existing Maven Projects
+3. Bu qovluğu seçin
+4. Proyekti seçin və Finish düyməsini basın
+5. `ProductCrudApplication.java` faylını açın
+6. Sağ klik -> Run As -> Java Application
 
-### Backend (Gələcək Planlar)
-- **Java** - Əsas proqramlaşdırma dili
-- **Spring Boot** - Veb framework
-- **MySQL** - Verilənlər bazası
-- **Thymeleaf** - Template engine
+### Maven ilə:
 
-## 🚀 Qurulum və İstifadə
+```bash
+mvn spring-boot:run
+```
 
-### Yerli Qurulum
-1. Bütün faylları yükləyin
-2. `index.html` faylını brauzerdə açın
-3. Vebsayt hazırdır!
+### Kompilyasiya:
 
-### Xüsusi Qurulum
-1. Fayl yollarını öz server quruluşunuza uyğun dəyişdirin
-2. Şəkilləri `uploads/images/` qovluğuna yerləşdirin
-3. Öz məlumatlarınızı HTML fayllarında dəyişdirin
+```bash
+mvn clean install
+```
 
-## 📄 Səhifələr
+## API Endpoints
 
-### Əsas Səhifə (main.html)
-- **Hero Section** - Profil və əsas məlumatlar
-- **Haqqımda** - Şəxsi məlumatlar və tərcümeyi-hal
-- **Bacarıqlar** - Frontend və Backend bacarıqları
-- **Layihələr** - Hazırladığım layihələr
-- **Əlaqə** - Əlaqə formu və məlumatları
+### 1. Yeni məhsul əlavə et (CREATE)
+```
+POST http://localhost:8080/api/products
+Content-Type: application/json
 
-### Layihələr Səhifəsi (storeApp.html)
-- StoreApp layihəsinin detallı təsviri
-- Gələcək layihə planları
-- Kod nümunələri
-- Ekran görüntüləri
+{
+    "name": "Laptop",
+    "description": "Dell XPS 15",
+    "price": 1500.00,
+    "quantity": 10,
+    "category": "Electronics"
+}
+```
 
-## 🎨 Dizayn Xüsusiyyətləri
+### 2. Bütün məhsulları göstər (READ ALL)
+```
+GET http://localhost:8080/api/products
+```
 
-- **Rəng Palitrası**: Bootstrap'un default rəng sxemi
-- **Fontlar**: Sistem fontları (Bootstrap default)
-- **Responsiv Breakpoints**: Bootstrap 5 breakpoint-ləri
-- **Navbar**: Fixed top navbar
-- **Cards**: Layihə və məlumat kartları
+### 3. ID-yə görə məhsul göstər (READ ONE)
+```
+GET http://localhost:8080/api/products/1
+```
 
-## 🔧 Fəaliyyət Göstərən JavaScript
+### 4. Kateqoriyaya görə məhsulları göstər
+```
+GET http://localhost:8080/api/products/category/Electronics
+```
 
-### main.js
-```javascript
-// Form göndərilməsi
-document.querySelector("form").addEventListener("submit", function (e) {
-  e.preventDefault();
-  alert("Mesajınız uğurla göndərildi!");
-  this.reset();
-});
+### 5. Ada görə məhsul axtar
+```
+GET http://localhost:8080/api/products/search?name=Laptop
+```
 
-// Hamar sürüşmə
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener("click", function (e) {
-    e.preventDefault();
-    document.querySelector(this.getAttribute("href")).scrollIntoView({
-      behavior: "smooth",
-    });
-  });
-});
+### 6. Məhsulu yenilə (UPDATE)
+```
+PUT http://localhost:8080/api/products/1
+Content-Type: application/json
+
+{
+    "name": "Laptop Updated",
+    "description": "Dell XPS 15 2024",
+    "price": 1600.00,
+    "quantity": 8,
+    "category": "Electronics"
+}
+```
+
+### 7. Məhsulu sil (DELETE)
+```
+DELETE http://localhost:8080/api/products/1
+```
+
+### 8. Bütün məhsulları sil
+```
+DELETE http://localhost:8080/api/products
+```
+
+## H2 Database Console
+
+URL: http://localhost:8080/h2-console
+
+- JDBC URL: `jdbc:h2:mem:productdb`
+- Username: `sa`
+- Password: (boş buraxın)
+
+## Proyekt Strukturu
+
+```
+src/
+├── main/
+│   ├── java/
+│   │   └── com/pragmatech/productcrud/
+│   │       ├── ProductCrudApplication.java
+│   │       ├── controller/
+│   │       │   └── ProductController.java
+│   │       ├── model/
+│   │       │   └── Product.java
+│   │       ├── repository/
+│   │       │   └── ProductRepository.java
+│   │       └── service/
+│   │           └── ProductService.java
+│   └── resources/
+│       └── application.properties
+└── test/
 ```
